@@ -10,5 +10,21 @@
     {
       "path": "./tsconfig.vitest.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "esnext",
+    "lib": ["es6"],
+    "target": "es6",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true
+  },
+  "include": ["src/**/*.ts", "server/**/*.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }
