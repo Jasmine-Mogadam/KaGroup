@@ -1,21 +1,17 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import Face from './components/silly-shapes/Face.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <div class="logo">
+    <h1>KaGroup</h1>
+  </div>
 
-    <div class="wrapper">
-      <HelloWorld msg="Hello VueConfUS 2023!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+  <div class="button-wrapper">
+    <button class="host-button"><Face></Face>Host</button>
+    <button class="join-button"><Face></Face>Join</button>
+  </div>
 
   <RouterView />
 </template>
@@ -28,32 +24,20 @@ header {
 
 .logo {
   display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
   text-align: center;
-  margin-top: 2rem;
+  font-weight: bold;
+  margin: 0 auto 2em;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.button-wrapper {
+  display: flex;
+  margin: 0 auto 2em;
+  flex-direction: column;
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
+.button-wrapper button {
+  flex: auto;
+  margin: 0.75em;
 }
 
 @media (min-width: 1024px) {

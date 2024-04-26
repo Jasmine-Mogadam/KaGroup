@@ -12,5 +12,5 @@ wss.on('connection', function connection(ws) {
 
   console.log('connected!')
 
-  ws.send('something')
+  //ws.send({something: 'something'}: JSON)
 })

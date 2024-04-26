@@ -24,6 +24,8 @@ class Client {
     this.handleSocketMessages()
   }
 
+  init() {}
+
   handleSocketMessages() {
     socket.onmessage = function (event: any) {
       const message = JSON.parse(event.data.toString())

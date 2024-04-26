@@ -14,4 +14,4 @@ app.use(router)
 
 app.mount('#app')
 
-currentClient.name = 'yehawer'
+currentClient.init()
