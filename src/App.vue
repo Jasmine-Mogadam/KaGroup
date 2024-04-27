@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import Face from './components/silly-shapes/Face.vue'
-
 </script>
 
 <template>
@@ -10,20 +9,19 @@ import Face from './components/silly-shapes/Face.vue'
       <h1>KaGroup!</h1>
     </div>
   </main>
-  </div>
 
-  <div id="customizedquestions" style="height: 50vh;width: 100vw;background-color: aliceblue;">
+  <div id="customizedquestions" style="height: 50vh; width: 100vw; background-color: aliceblue">
     <div>
       <h4>tross</h4>
-      <br>
-      <br>
+      <br />
+      <br />
       <div></div>
       <h4>bu</h4>
-      <br>
-      <br>
+      <br />
+      <br />
       <div></div>
-      <br>
-      <br>
+      <br />
+      <br />
 
       <h4>l</h4>
       <div></div>
@@ -32,8 +30,8 @@ import Face from './components/silly-shapes/Face.vue'
     <div>
       <h1></h1>
       <div>
-        <div style="max-height: 30vh;width: 100vw;overflow-y: scroll;">
-          <div style="height: 50vh;width: 100vw;background-color: green;"></div>
+        <div style="max-height: 30vh; width: 100vw; overflow-y: scroll">
+          <div style="height: 50vh; width: 100vw; background-color: green"></div>
         </div>
       </div>
     </div>
@@ -44,8 +42,7 @@ import Face from './components/silly-shapes/Face.vue'
 </template>
 
 <style scoped>
-
-#customizedquestions>div {
+#customizedquestions > div {
   background-color: blue;
   height: 30px;
   width: 300px;
