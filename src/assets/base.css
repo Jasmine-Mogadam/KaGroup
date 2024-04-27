@@ -67,6 +67,7 @@
 
 html {
   background: var(--color-background);
+  overflow: hidden;
 }
 
 body {
