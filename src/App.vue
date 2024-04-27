@@ -5,12 +5,19 @@ import Face from './components/silly-shapes/Face.vue'
 
 <template>
   <div class="logo">
-    <h1>KaGroup</h1>
+    <h1>KaGroup!</h1>
   </div>
-
-  <div class="button-wrapper">
-    <button class="host-button"><Face></Face>Host</button>
-    <button class="join-button"><Face></Face>Join</button>
+  <div class="button-positioner">
+    <div class="button-wrapper">
+      <button class="host-button">
+        <div class="left-align face-container"><Face></Face></div>
+        <h1>Host</h1>
+      </button>
+      <button class="join-button">
+        <div class="right-align face-container"><Face></Face></div>
+        <h1>Join</h1>
+      </button>
+    </div>
   </div>
 
   <RouterView />
@@ -29,6 +36,11 @@ header {
   margin: 0 auto 2em;
 }
 
+.logo h1 {
+  margin-top: 100px;
+  font-size: 15vw;
+}
+
 .button-wrapper {
   display: flex;
   margin: 0 auto 2em;
@@ -37,7 +49,44 @@ header {
 
 .button-wrapper button {
   flex: auto;
-  margin: 0.75em;
+  margin-bottom: 2em;
+  height: 75px;
+  width: 75vw;
+}
+
+.face-container {
+  position: relative;
+  top: 8px;
+}
+
+.right-align {
+  right: 60px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.host-button {
+  background-color: var(--red);
+}
+
+.join-button {
+  background-color: var(--blue);
+}
+
+.button-positioner {
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+button {
+  border: none;
+}
+
+h1 {
+  font-family: 'Fredoka';
+  color: var(--off-white);
 }
 
 @media (min-width: 1024px) {

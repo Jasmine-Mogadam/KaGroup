@@ -56,5 +56,8 @@
   "[markdown]": {
     "editor.wordWrap": "wordWrapColumn",
     "editor.wordWrapColumn": 80
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "svipas.prettier-plus"
   }
 }
