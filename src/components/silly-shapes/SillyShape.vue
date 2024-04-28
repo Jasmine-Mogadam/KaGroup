@@ -31,6 +31,11 @@ defineProps({
     required: true,
     default: () => ({ x: 0, y: 0 })
   },
+  faceRotation: {
+    type: Number,
+    required: false,
+    default: () => 0
+  },
   overallPosition: {
     type: Object as PropType<Xy>,
     required: true,
@@ -58,7 +63,11 @@ defineProps({
     </div>
     <div
       class="silly-shape-face"
-      :style="{ left: facePosition.x + 'px', top: facePosition.y + 'px' }"
+      :style="{
+        left: facePosition.x + 'px',
+        top: facePosition.y + 'px',
+        transform: 'rotate(' + faceRotation + 'deg)'
+      }"
     >
       <Face></Face>
     </div>

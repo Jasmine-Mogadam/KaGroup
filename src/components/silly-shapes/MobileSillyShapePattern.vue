@@ -4,13 +4,19 @@ import SillyShape from './SillyShape.vue'
 </script>
 <script lang="ts">
 export default {
+  created() {
+    window.addEventListener('resize', this.scaleDivToFullWidth)
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.scaleDivToFullWidth)
+  },
   mounted() {
     this.scaleDivToFullWidth()
   },
   methods: {
     scaleDivToFullWidth() {
       const scaledDiv = document.getElementById('silly-shape-pattern')
-      const scaleX = window.innerWidth / scaledDiv.clientWidth
+      const scaleX = document.documentElement.clientWidth / scaledDiv.clientWidth
       scaledDiv.style.transform = `scale(${scaleX})`
       scaledDiv.style.transformOrigin = 'top left'
     }
@@ -51,9 +57,9 @@ export default {
       <SillyShape
         :shapeType="ShapeTypes.HEXAGON"
         :color="ShapeColors.RED"
-        :size="{ x: 1.5, y: 1.8 }"
+        :size="{ x: 20, y: 18 }"
         :facePosition="{ x: -20, y: -100 }"
-        :overallPosition="{ x: 370, y: -10 }"
+        :overallPosition="{ x: 380, y: 50 }"
       ></SillyShape>
     </div>
     <div style="transform: rotate(-10deg)">
@@ -125,8 +131,5 @@ export default {
   background: var(--dark-grey);
   -webkit-mask-image: linear-gradient(0deg, rgba(0, 0, 0, 0) 33%, var(--dark-grey) 65%);
   mask-image: linear-gradient(0deg, rgba(0, 0, 0, 0) 33%, var(--dark-grey) 65%);
-}
-
-.silly-shape-pattern-container {
 }
 </style>
