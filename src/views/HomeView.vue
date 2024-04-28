@@ -5,6 +5,9 @@ import Face from '../components/silly-shapes/Face.vue'
 
 <template>
   <main>
+    <div class="background">
+      <MobileSillyShapePattern></MobileSillyShapePattern>
+    </div>
     <div class="button-positioner">
       <div class="button-wrapper">
         <button class="host-button">
@@ -17,13 +20,32 @@ import Face from '../components/silly-shapes/Face.vue'
         </button>
       </div>
     </div>
-    <div class="background">
-      <MobileSillyShapePattern></MobileSillyShapePattern>
+    <div class="logo">
+      <h1>KaGroup!</h1>
     </div>
   </main>
 </template>
 
 <style>
+.logo {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  margin: 0 auto 2em;
+  position: relative;
+  text-shadow: 0px 3px 9px var(--dark-grey);
+}
+
+.logo h1 {
+  margin-top: 100px;
+  font-size: 15vw;
+}
+
+h1 {
+  font-family: 'Fredoka';
+  color: var(--off-white);
+}
+
 .button-wrapper {
   display: flex;
   margin: 0 auto 2em;
@@ -68,6 +90,7 @@ button {
 }
 
 .background {
-  z-index: -1;
+  position: absolute;
+  z-index: 0;
 }
 </style>

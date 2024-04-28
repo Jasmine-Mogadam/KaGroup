@@ -4,13 +4,7 @@ import Face from './components/silly-shapes/Face.vue'
 </script>
 
 <template>
-  <main>
-    <div class="logo">
-      <h1>KaGroup!</h1>
-    </div>
-  </main>
-
-  <div id="customizedquestions" style="height: 50vh; width: 100vw; background-color: aliceblue">
+  <!--div id="customizedquestions" style="height: 50vh; width: 100vw; background-color: aliceblue">
     <div>
       <h4>tross</h4>
       <br />
@@ -36,7 +30,7 @@ import Face from './components/silly-shapes/Face.vue'
       </div>
     </div>
     <div></div>
-  </div>
+  </div-->
 
   <RouterView />
 </template>
@@ -52,23 +46,6 @@ import Face from './components/silly-shapes/Face.vue'
 header {
   line-height: 1.5;
   max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  text-align: center;
-  font-weight: bold;
-  margin: 0 auto 2em;
-}
-
-.logo h1 {
-  margin-top: 100px;
-  font-size: 15vw;
-}
-
-h1 {
-  font-family: 'Fredoka';
-  color: var(--off-white);
 }
 
 @media (min-width: 1024px) {
