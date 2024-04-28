@@ -2,7 +2,7 @@ import { WebSocket } from 'ws'
 import { WebSocketResponse } from '../websocket/websocket-response.model'
 import { EventEmitter } from 'stream'
 import { Endpoints } from '../websocket/endpoints'
-import { AnsweredQuestion } from '../websocket/response-models/answered-question.model'
+import { AnswerQuestionModel } from '../websocket/response-models/answer-question.model'
 import { Room } from '../room/room'
 
 export class Player {
@@ -11,7 +11,7 @@ export class Player {
   name: string
   disconnected: EventEmitter = new EventEmitter()
   answeredQuestion: EventEmitter = new EventEmitter()
-  answeredQuestions: AnsweredQuestion[] = []
+  answeredQuestions: AnswerQuestionModel[] = []
 
   constructor(websocket, name) {
     this.websocket = websocket
@@ -31,7 +31,7 @@ export class Player {
           this.handleCustomName(new CustomNameModel(response.body)) //Implement this, should assign the name to this player and emit an event that name was changed
           break
         case Endpoints.ANSWERED_QUESTION:
-          this.handleAnsweredQuestion(new AnsweredQuestion(response.body))
+          this.handleAnsweredQuestion(new AnswerQuestionModel(response.body))
           break
         default:
           console.log('Error! Unhandled message: ' + response.toString())
@@ -39,7 +39,7 @@ export class Player {
     })
   }
 
-  handleAnsweredQuestion(answeredQuestion: AnsweredQuestion) {
+  handleAnsweredQuestion(answeredQuestion: AnswerQuestionModel) {
     this.answeredQuestions.push(answeredQuestion)
     this.answeredQuestion.emit('true')
   }

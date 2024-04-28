@@ -1,4 +1,4 @@
-export class AnsweredQuestionModel {
+export class AnswerQuestionModel {
   question: string
   type: QuestionType
   answer: string
