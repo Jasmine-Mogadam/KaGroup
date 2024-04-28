@@ -4,7 +4,6 @@ interface Question {
     QuestionType:QuestionType,
     QuestionText:string,
     QuestionPreEntered:boolean,
-    QuestionActive:boolean,
     QuestionOptions:Array<string>,
     QuestionPack: QuestionPack
   }

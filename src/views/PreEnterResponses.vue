@@ -4,12 +4,10 @@ import { RouterLink, RouterView } from 'vue-router'
 import { Question } from '../types/Question';
 import * as QuestionPack from '../types/QuestionPack';
 import * as defaultPacks from "../constants/QuestionPacks";
-import { QuestionType } from '../types/QuestionType';
-import { currentClient } from '../client-websocket/client-websocket';
 </script>
 
 <template>
-  <div id="customizedquestions" style="height: 66vh;width: 33vw;background-color: green;">
+  <div id="questions" style="height: 66vh;width: 33vw;background-color: green;">
     <div>
       <h4>Question</h4>
       <input id="questionText" v-model="questionText" type="text">
@@ -88,7 +86,6 @@ export default {
     return {
       nexId: 1,
       questionText:"bruh",
-      questionType:'text',
       questionPreEntered:false,
       questionActive:true,
       questionOption:"first",
@@ -106,7 +103,7 @@ export default {
     createQuestion() {
       let curId:number = this.nexId;
       let toAdd:Question = {
-        QuestionType:this.questionType,
+        QuestionType:this.questionOptions.length > 0?"multiple":"text",
         QuestionText:this.questionText,
         QuestionOptions:this.questionOptions,
         QuestionPreEntered:this.questionPreEntered,
@@ -179,6 +176,9 @@ export default {
           return defaultPacks.icebreakerquestions;
         default:[]
       }
+    },
+    saveQuizAndGoToPreEntry() {
+      localStorage.setItem("quizData", JSON.stringify(this));
     },
     printTest(str:string) {
       console.log(str);
