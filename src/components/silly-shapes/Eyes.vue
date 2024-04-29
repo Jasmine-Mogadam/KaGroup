@@ -11,7 +11,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+interface Position {
+  x: number
+  y: number
+}
+
 export default {
   data() {
     return {
@@ -32,17 +37,17 @@ export default {
     generateAnimation() {
       const numberOfFrames = this.getRandomInt(5, 10) // Random number of frames between 5 and 10
       const keyframes = []
-      let xPosition = this.randomPosition()
-      let yPosition = this.randomPosition()
+      let randomPosition: Position = this.randomPosition()
       for (let i = 0; i <= numberOfFrames; i++) {
-        xPosition = this.randomPosition()
-        yPosition = this.randomPosition()
+        randomPosition = this.randomPosition()
         keyframes.push(
-          `${(i * 100) / numberOfFrames}% { top: ${yPosition}px; left: ${xPosition}px; }`
+          `${(i * 100) / numberOfFrames}% { top: ${randomPosition.y}px; left: ${
+            randomPosition.x
+          }px; }`
         )
       }
       // Ensure the last keyframe's position is very close to the first one for a smoother transition
-      keyframes[0] = `0% { top: ${yPosition}px; left: ${xPosition}px; }`
+      keyframes[0] = `0% { top: ${randomPosition.y}px; left: ${randomPosition.x}px; }`
 
       const animationKeyframes = `@keyframes ${this.animationName} { ${keyframes.join(' ')} }`
 
@@ -55,8 +60,17 @@ export default {
 
       return `${this.animationName} ${animationDuration} ${animationIterationCount}`
     },
-    randomPosition() {
-      return Math.floor(Math.random() * 100) + -50 // Random number between 1 and 50
+    randomPosition(): Position {
+      let xPosition = Math.floor(Math.random() * 100) + -50 // Random number between -50 and 50
+      let yPosition = Math.floor(Math.random() * 100) + -50 // Random number between -50 and 50
+
+      // Check if the positions are too close to (0,0) so they don't look absolutely terrifying
+      while (Math.sqrt(xPosition * xPosition + yPosition * yPosition) < 25) {
+        xPosition = Math.floor(Math.random() * 125) + -75 // Reroll xPosition
+        yPosition = Math.floor(Math.random() * 125) + -75 // Reroll yPosition
+      }
+
+      return { x: xPosition, y: yPosition }
     },
     getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min
@@ -100,27 +114,4 @@ body {
 .eye-container {
   display: flex;
 }
-/*
-@keyframes pupilMove {
-  0% {
-    top: 0;
-    left: 0;
-  }
-  25% {
-    top: 25px;
-    left: 25px;
-  }
-  50% {
-    top: 0;
-    left: 50px;
-  }
-  75% {
-    top: 25px;
-    left: 0;
-  }
-  100% {
-    top: 0;
-    left: 0;
-  }
-}*/
 </style>

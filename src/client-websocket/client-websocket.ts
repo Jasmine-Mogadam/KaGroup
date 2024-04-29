@@ -55,6 +55,10 @@ class Client {
     // TODO call server with room code to get information
     // Get wait for response back from server for success/failure and handle it
   }
+
+  checkIfRoomExists(roomCode: string) {
+    return false
+  }
 }
 
 export const currentClient = new Client()

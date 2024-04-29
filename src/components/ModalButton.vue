@@ -36,7 +36,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div v-bind="$attrs">
+  <div :class="[{ 'modal-button-internal-container': showModal }]" v-bind="$attrs">
     <button
       :class="[buttonClass, 'button-container', { 'button-open': showModal }]"
       @click="toggleModal"
@@ -62,27 +62,25 @@ export default defineComponent({
 </template>
 
 <style scoped>
+.modal-button-internal-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
 .button-container {
   display: inline-block;
   z-index: 1;
   position: relative;
-  transition: transform 0.5s ease-in-out;
-}
-
-.button-container.button-open {
-  z-index: 3;
-  transform: translateY(-500%);
-}
-
-.host-button.button-open {
-  transform: translateY(-400%);
+  top: 0;
+  transition: transform 0.5s ease-in-out, top 0.5s;
 }
 
 .modal {
   position: fixed;
   height: 0;
   width: 0;
-  left: 25vw;
+  left: 0;
   top: 20vh;
   transform: translate(-50%, -50%);
   z-index: 0;
@@ -90,10 +88,24 @@ export default defineComponent({
   transition: height 0.5s ease-in-out, width 0.5s ease-in-out, top 0.5s ease-in-out;
 }
 
+.button-container.button-open {
+  z-index: 3;
+  transform: unset;
+  top: 5em;
+  transition: top 0.5s;
+}
+
+.host-button.button-open {
+  transform: translateX(-50%);
+  left: 50%;
+  top: 15em;
+  transition: top 0.5s;
+}
+
 .modal.modal-open {
-  height: 100vh;
+  height: 100%;
   width: 100vw;
-  left: 25vw;
+  left: 0;
   z-index: 2;
   top: 0vh;
 }
@@ -102,7 +114,7 @@ export default defineComponent({
   display: block;
   background-color: unset;
   position: absolute;
-  top: 0.1em;
+  top: 1.85em;
   right: 0.3em;
   margin: auto;
   height: unset;
@@ -117,5 +129,45 @@ export default defineComponent({
   z-index: 2;
   opacity: 1;
   transition: opacity 0.5s;
+  height: unset;
+}
+
+.modal-open {
+  height: 100%;
+  left: 0;
+  top: unset;
+  transform: unset;
+}
+
+/* desktop css */
+@media (min-width: 1000px) {
+  .button-container.button-open {
+    transform: translateY(-600%);
+  }
+  .host-button.button-open {
+    left: 55%;
+    transform: translateY(-675%) translateX(-50%);
+  }
+  .modal-button-internal-container {
+    width: unset;
+    height: unset;
+    position: unset;
+  }
+  .modal.modal-open {
+    transform: translate(-50%, -50%);
+    height: 100vh;
+    width: 100vw;
+    left: 25vw;
+    z-index: 2;
+    top: 0vh;
+  }
+  .modal {
+    left: 25vw;
+  }
+
+  .close-button {
+    top: 0.1em;
+    right: 0.3em;
+  }
 }
 </style>

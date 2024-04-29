@@ -1,7 +1,17 @@
 <template>
-  <div class="join-prompt-holder">
-    <div class="join-prompt-input-container">
-      <label id="room-code-label">Room Code</label>
+  <div class="host-prompt-holder">
+    <div class="people-per-team">
+      <label id="room-code-label">People per Team</label>
+      <input id="room-code-input" v-model="peoplePerTeam" type="radio" placeholder="4" />
+    </div>
+    <div class="checkboxes">
+      <input id="reveal-grouping-reason-input" v-model="revealGroupingReason" type="checkbox" />
+      <label id="reveal-grouping-reason-label">Reveal Grouping Reason</label>
+      <input id="allow-custom-names-input" v-model="allowCustomNames" type="checkbox" />
+      <label id="allow-custom-names-label">Allow Custom Names</label>
+    </div>
+    <div class="time-limit">
+      <label id="time-limit-label">Time Limit</label>
       <input
         id="room-code-input"
         v-model="roomCode"
@@ -13,20 +23,33 @@
         >Room code does not exist.</span
       >
     </div>
-    <div :class="['join-prompt-button-container', { 'button-disabled': roomCodeExistsError }]">
-      <button id="prompt-join-button" @click="joinRoom">Join</button>
+    <ModalButton :name="'Customize Buttons'" :buttonClass="''" :faceClass="'left-align'">
+      <JoinPrompt> </JoinPrompt
+    ></ModalButton>
+    <div :class="['host-prompt-button-container', { 'button-disabled': roomCodeExistsError }]">
+      <button id="prompt-host-button" @click="showCustomizeQuestions = true">
+        Customize Questions
+      </button>
+    </div>
+    <div :class="['host-prompt-button-container', { 'button-disabled': roomCodeExistsError }]">
+      <button id="prompt-host-button" @click="hostRoom">Create Room</button>
     </div>
   </div>
 </template>
 
 <script>
 import { currentClient } from '@/client-websocket/client-websocket'
+import ModalButton from './ModalButton.vue'
 export default {
   data() {
     return {
       roomCode: '',
+      peoplePerRound: 4,
       roomCodeExistsError: false,
-      debounceTimeout: null
+      debounceTimeout: null,
+      revealGroupingReason: false,
+      allowCustomNames: true,
+      showCustomizeQuestions: false
     }
   },
   methods: {
@@ -39,9 +62,9 @@ export default {
     checkRoomCodeExists() {
       this.roomCodeExistsError = !currentClient.checkIfRoomExists(this.roomCode.toUpperCase())
     },
-    joinRoom() {
+    hostRoom() {
       if (!this.roomCodeExistsError) {
-        currentClient.joinRoom(this.roomCode)
+        currentClient.hostRoom(this.roomCode)
       }
     }
   }
@@ -49,7 +72,7 @@ export default {
 </script>
 
 <style scoped>
-.join-prompt-holder {
+.host-prompt-holder {
   position: relative;
   top: 50%;
   left: 50%;
@@ -61,13 +84,13 @@ export default {
   padding: 250px;
   padding-bottom: 50px;
 }
-.join-prompt-input-container {
+.host-prompt-input-container {
   display: flex;
   flex-direction: column;
   align-content: space-around;
   align-items: flex-start;
 }
-.join-prompt-button-container {
+.host-prompt-button-container {
   display: flex;
   align-items: center;
 }
@@ -89,16 +112,16 @@ export default {
   position: relative;
   top: -7.5em;
   height: 0;
-  color: var(--red);
+  color: var(--dark-blue);
 }
-#prompt-join-button {
+#prompt-host-button {
   font-size: 2em;
   font-family: 'Fredoka';
   color: var(--off-color);
   background-color: var(--red);
   width: 10em;
 }
-.button-disabled #prompt-join-button {
+.button-disabled #prompt-host-button {
   opacity: 0.5;
 }
 </style>

@@ -2,17 +2,17 @@
 import { ref } from 'vue'
 import MobileSillyShapePattern from '../components/silly-shapes/MobileSillyShapePattern.vue'
 import DesktopSillyShapePattern from '../components/silly-shapes/DesktopSillyShapePattern.vue'
-import Face from '../components/silly-shapes/Face.vue'
 import ModalButton from '../components/ModalButton.vue'
 import JoinPrompt from '../components/JoinPrompt.vue'
+import HostPrompt from '../components/HostPrompt.vue'
 
-const clientWidth = ref(document.documentElement.clientWidth)
+const clientWidth = document.documentElement.clientWidth
 </script>
 
 <template>
   <main>
     <div class="background">
-      <div class="mobile-bg" v-if="clientWidth.value < 1000">
+      <div class="mobile-bg" v-if="clientWidth < 1000">
         <MobileSillyShapePattern></MobileSillyShapePattern>
       </div>
       <div class="desktop-bg" v-else>
@@ -26,6 +26,7 @@ const clientWidth = ref(document.documentElement.clientWidth)
       <div class="button-positioner">
         <div class="button-wrapper">
           <ModalButton :name="'Host'" :buttonClass="'host-button'" :faceClass="'left-align'">
+            <HostPrompt> </HostPrompt>
           </ModalButton>
           <ModalButton :name="'Join'" :buttonClass="'join-button'" :faceClass="'right-align'">
             <JoinPrompt> </JoinPrompt
