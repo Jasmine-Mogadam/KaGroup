@@ -18,6 +18,7 @@ class Client {
   public host: boolean = false
   public name: string = UNSET
   public room: string = UNSET
+  public gameDetails: any = {};
 
   constructor() {
     this.socket = socket
@@ -44,13 +45,13 @@ class Client {
     }.bind(this)
   }
 
-  hostGame() {
+  clientHostGame() {
     this.host = true
     // TODO call server with game settings
     // Get wait for response back from server for success/failure and handle it
   }
 
-  joinGame() {
+  clientJoinGame() {
     this.host = false
     // TODO call server with room code to get information
     // Get wait for response back from server for success/failure and handle it

@@ -11,6 +11,13 @@ import { currentClient } from '../client-websocket/client-websocket';
 <template>
   <div id="customizedquestions" style="height: 66vh;width: 33vw;background-color: green;">
     <div>
+      Estimated Time (mins.):
+      {{
+        (Object.values(questions).length>0?Object.values(questions).map((q:Question) => q.QuestionType=='text'?30:(q.QuestionType=='numeric'?15:(q.QuestionOptions.length*3+15))).reduce((sum, val) => sum + val, 0):0)/60
+      }}
+    </div>
+    <br><br>
+    <div>
       <h4>Question</h4>
       <input id="questionText" v-model="questionText" type="text">
       <h4>Type</h4>
@@ -95,9 +102,9 @@ export default {
       packs:[],
       questionOptions:[],
       questions:{},
-      catme:false,
-      bigfive:false,
-      icebreaker:false,
+      catme:true,
+      bigfive:true,
+      icebreaker:true,
       grouptype:'heterogeneous'
     }
   },
