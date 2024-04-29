@@ -1,6 +1,6 @@
 export class CodeModel {
   code: string
-  constructor(response: any) {
+  constructor(response: JSON) {
     this.code = response.code
   }
 }

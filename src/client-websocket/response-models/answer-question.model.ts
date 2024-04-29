@@ -2,7 +2,7 @@ export class AnswerQuestionModel {
   question: string
   type: QuestionType
   answer: string
-  constructor(response: any) {
+  constructor(response: JSON) {
     this.question = response.question
     this.type = response.type
     this.answer = response.answer

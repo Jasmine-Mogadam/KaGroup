@@ -1,8 +1,6 @@
-import { StringifyOptions } from 'querystring'
-import { Player } from '../player/player'
-import { Endpoints } from '../websocket/endpoints'
-import { EventEmitter } from 'stream'
-import { GameModel } from '../websocket/response-models/game.model'
+import { Player } from '../player/player.ts'
+import { EventEmitter } from 'node:events'
+import { GameModel } from '../websocket/response-models/game.model.ts'
 
 export class Room {
   players: Player[]
@@ -22,6 +20,7 @@ export class Room {
     player.clientSocket.addEventListener('close', () => {
       this.removePlayer(player)
     })
+    return true;
     // player.answeredQuestionEmitter.event.on("true", () => {
     //   this.numAnswers++
     //   if (this.numAnswers == this.players.length) {

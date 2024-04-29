@@ -1,10 +1,10 @@
 import { WebSocket } from 'ws'
-import { WebSocketResponse } from '../websocket/websocket-response.model'
-import { EventEmitter } from 'stream'
-import { Endpoints } from '../websocket/endpoints'
-import { AnswerQuestionModel } from '../websocket/response-models/answer-question.model'
-import { Room } from '../room/room'
-import { CustomNameModel } from '../websocket/response-models/custom-name.model'
+import { WebSocketResponse } from '../websocket/websocket-response.model.ts'
+import { EventEmitter } from 'node:events'
+import { Endpoints } from '../websocket/endpoints.ts'
+import { AnswerQuestionModel } from '../websocket/response-models/answer-question.model.ts'
+import { Room } from '../room/room.ts'
+import { CustomNameModel } from '../websocket/response-models/custom-name.model.ts'
 
 export class Player {
   websocket: WebSocket

@@ -15,6 +15,7 @@ const wss = new WebSocketServer({ port: 3000 })
 //Whenever a new client connects to the server, set up event listeners
 wss.on('connection', function connection(ws) {
   // Whenever a client socket sends information, handle it
+
   ws.on('message', function message(data) {
     const response = new WebSocketResponse(data);
     ws.send(
@@ -34,55 +35,23 @@ wss.on('connection', function connection(ws) {
   // Further functionality is handled directly by the classes with their own listeners
 function handleWebsocketMessage(data, ws) {
   const response = new WebSocketResponse(data);
+
   switch (response.endpoint) {
     case Endpoints.CREATE_ROOM:
-      return hostGame(new GameModel(response.body), ws);
-    case Endpoints.GAME_EXISTS:
-      return gameExists(new CodeModel(response.body));
-    case Endpoints.PLAYER_EXISTS:
-      return playerExists(new CodeModel(response.body), response.body.name)
-    case Endpoints.JOIN_ROOM:
-      return joinGame(new CodeModel(response.body), ws)
-    default:
-      console.log('unidentified action!')
-      return false;
-  }
-
-    /*
-     gameDetails
-       quizDetails
-         The model from the customized questions
-       teamSize
-       customNamesAllowed
-       groupReasoningRevealed
-       timeLimit
-   */
-    function hostGame(game:GameModel, ws:any) {
-      let newRoom = new Room(game)
+      let newRoom = new Room(new GameModel(response.body))
       rooms[newRoom.code] = newRoom
       let newHost = new Host(newRoom, ws)
       hosts[newRoom.code] = newHost
       console.log("Room code: "+newRoom.code)
       return newRoom.code
-    } // add some buttons to the ui and have them call the client websocket
-
-    // only call if game exists and player doesn't
-    function joinGame(code:CodeModel, ws:any) {
-      return rooms[code.code].addPlayer(new Player(ws));
-    }
-
-    function gameExists(code:CodeModel) {
-      if (!rooms[code.code]) {
-        return false;
-      }
-      return true;
-    }
-
-    // Only call if gameExists
-    function playerExists(code:CodeModel, name:string) {
-      return rooms[code.code].players.map((p:Player) => p.name).indexOf(name)!=-1;
-    }
-// - Name Exists
-// - IsCustom
-
+    case Endpoints.GAME_EXISTS:
+      return !!rooms[(new CodeModel(response.body)).code];
+    case Endpoints.PLAYER_EXISTS:
+      return rooms[(new CodeModel(response.body)).code].players.map((p:Player) => p.name).indexOf(name)!=-1;
+    case Endpoints.JOIN_ROOM:
+      return (rooms[(new CodeModel(response.body)).code] as Room).addPlayer(new Player(ws));
+    default:
+      console.log('unidentified action!')
+      return false;
+  }
 }

@@ -1,4 +1,7 @@
-import { socket } from './websocket.ts'
+import { Endpoints } from './endpoints.js'
+import { CodeModel } from './response-models/code.model.js'
+import { WebSocketResponse } from './websocket-response.model.js'
+import { getAsyncMessage, sendAction, socket } from './websocket.ts'
 export const UNSET: string = 'UNSET'
 
 window.onload = function () {
@@ -18,7 +21,6 @@ class Client {
   public host: boolean = false
   public name: string = UNSET
   public room: string = UNSET
-  public gameDetails: any = {};
 
   constructor() {
     this.socket = socket
@@ -29,19 +31,20 @@ class Client {
 
   handleSocketMessages() {
     socket.onmessage = function (event: any) {
-      const message = JSON.parse(event.data.toString())
-      const action = message.action
-      const body = message.body
-
-      switch (action) {
-        case 'exampleAction':
-          console.log(body)
-          break
+      const response = new WebSocketResponse(event.data);
+      switch (response.endpoint) {
+        case Endpoints.CREATE_ROOM:
+          // Emit an event that affects the frontend
+        case Endpoints.GAME_EXISTS:
+          // Emit an event that affects the frontend
+        case Endpoints.PLAYER_EXISTS:
+          // Emit an event that affects the frontend
+        case Endpoints.JOIN_ROOM:
+          // Emit an event that affects the frontend
         default:
           console.log('unidentified action!')
+          return false;
       }
-
-      console.log(message)
     }.bind(this)
   }
 
@@ -49,16 +52,18 @@ class Client {
     this.host = true
     // TODO call server with game settings
     // Get wait for response back from server for success/failure and handle it
+    sendAction(Endpoints.CREATE_ROOM);
   }
 
-  clientJoinGame() {
+  clientJoinGame(code:CodeModel) {
     this.host = false
     // TODO call server with room code to get information
     // Get wait for response back from server for success/failure and handle it
+    sendAction(Endpoints.JOIN_ROOM,code);
   }
 
-  checkIfRoomExists(roomCode: string) {
-    return false
+  clientCheckIfRoomExists(code:CodeModel) {
+    sendAction(Endpoints.GAME_EXISTS,code);
   }
 }
 
