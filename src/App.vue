@@ -1,37 +1,8 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import Face from './components/silly-shapes/Face.vue'
 </script>
 
 <template>
-  <!--div id="customizedquestions" style="height: 50vh; width: 100vw; background-color: aliceblue">
-    <div>
-      <h4>tross</h4>
-      <br />
-      <br />
-      <div></div>
-      <h4>bu</h4>
-      <br />
-      <br />
-      <div></div>
-      <br />
-      <br />
-
-      <h4>l</h4>
-      <div></div>
-      <button></button>
-    </div>
-    <div>
-      <h1></h1>
-      <div>
-        <div style="max-height: 30vh; width: 100vw; overflow-y: scroll">
-          <div style="height: 50vh; width: 100vw; background-color: green"></div>
-        </div>
-      </div>
-    </div>
-    <div></div>
-  </div-->
-
   <RouterView />
 </template>
 

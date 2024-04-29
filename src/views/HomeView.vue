@@ -1,15 +1,18 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import MobileSillyShapePattern from '../components/silly-shapes/MobileSillyShapePattern.vue'
 import DesktopSillyShapePattern from '../components/silly-shapes/DesktopSillyShapePattern.vue'
 import Face from '../components/silly-shapes/Face.vue'
+import ModalButton from '../components/ModalButton.vue'
+import JoinPrompt from '../components/JoinPrompt.vue'
 
-const clientWidth = document.documentElement.clientWidth
+const clientWidth = ref(document.documentElement.clientWidth)
 </script>
 
 <template>
   <main>
     <div class="background">
-      <div class="mobile-bg" v-if="clientWidth < 1000">
+      <div class="mobile-bg" v-if="clientWidth.value < 1000">
         <MobileSillyShapePattern></MobileSillyShapePattern>
       </div>
       <div class="desktop-bg" v-else>
@@ -22,14 +25,11 @@ const clientWidth = document.documentElement.clientWidth
       </div>
       <div class="button-positioner">
         <div class="button-wrapper">
-          <button class="host-button">
-            <div class="left-align face-container"><Face></Face></div>
-            <h1>Host</h1>
-          </button>
-          <button class="join-button">
-            <div class="right-align face-container"><Face></Face></div>
-            <h1>Join</h1>
-          </button>
+          <ModalButton :name="'Host'" :buttonClass="'host-button'" :faceClass="'left-align'">
+          </ModalButton>
+          <ModalButton :name="'Join'" :buttonClass="'join-button'" :faceClass="'right-align'">
+            <JoinPrompt> </JoinPrompt
+          ></ModalButton>
         </div>
       </div>
     </div>
