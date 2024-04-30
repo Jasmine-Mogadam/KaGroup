@@ -69,11 +69,21 @@ export default defineComponent({
 }
 
 .button-container {
+  filter: brightness(100%);
   display: inline-block;
   z-index: 1;
   position: relative;
   top: 0;
-  transition: transform 0.5s ease-in-out, top 0.5s;
+  transition: all 0.5s;
+}
+
+.button-container:hover {
+  filter: brightness(85%);
+  transition: all 0.5s;
+}
+
+.button-open:hover {
+  filter: brightness(100%);
 }
 
 .modal {
@@ -97,8 +107,8 @@ export default defineComponent({
 
 .host-button.button-open {
   transform: translateX(-50%);
-  left: 50%;
-  top: 15em;
+  left: 45%;
+  top: 11em;
   transition: top 0.5s;
 }
 
@@ -122,7 +132,12 @@ export default defineComponent({
   color: var(--off-white);
   font-size: 5em;
   opacity: 0;
-  transition: opacity 0.5s;
+  transition: all;
+}
+
+.close-button:hover {
+  color: white;
+  transition: all;
 }
 
 .modal-open .close-button {
@@ -146,6 +161,7 @@ export default defineComponent({
   }
   .host-button.button-open {
     left: 55%;
+    top: 15em;
     transform: translateY(-675%) translateX(-50%);
   }
   .modal-button-internal-container {

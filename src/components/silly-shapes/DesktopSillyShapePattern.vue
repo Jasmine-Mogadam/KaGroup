@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     scaleDivToFullSize() {
-      const scaledDiv = document.getElementById('silly-shape-pattern')
+      let scaledDiv = document.getElementById('silly-shape-pattern')
       let smallestScale = 1
       const xScale = document.documentElement.clientWidth / scaledDiv.clientWidth
       if (smallestScale > xScale) {

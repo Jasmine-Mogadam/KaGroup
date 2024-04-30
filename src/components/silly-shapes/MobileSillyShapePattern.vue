@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     scaleDivToFullWidth() {
-      const scaledDiv = document.getElementById('silly-shape-pattern')
+      let scaledDiv = document.getElementById('silly-shape-pattern')
       const scaleX = document.documentElement.clientWidth / scaledDiv.clientWidth
       scaledDiv.style.transform = `scale(${scaleX})`
       scaledDiv.style.transformOrigin = 'top left'
