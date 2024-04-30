@@ -35,7 +35,8 @@ export default {
       roomCode: '',
       roomCodeExistsError: false,
       debounceTimeout: null,
-      disabledClass: 'button-disabled'
+      disabledClass: 'button-disabled',
+      playerName: ""
     }
   },
   methods: {
