@@ -6,6 +6,7 @@ import { WebSocketResponse } from './websocket/websocket-response.model.ts';
 import { Endpoints } from './websocket/endpoints.ts';
 import { CodeModel } from './websocket/response-models/code.model.ts';
 import { GameModel } from './websocket/response-models/game.model.ts';
+import { CustomNameModel } from './websocket/response-models/custom-name.model.ts';
 let rooms:any = {};
 let hosts:any = {};
 
@@ -53,12 +54,16 @@ function handleWebsocketMessage(data, ws) {
     case Endpoints.PLAYER_EXISTS:
       return rooms[(new CodeModel(response.body)).code].players.map((p:Player) => p.name).indexOf(name)!=-1;
     case Endpoints.JOIN_ROOM:
-      console.log("Joining Room: "+(new CodeModel(response.body)).code);
-      (rooms[(new CodeModel(response.body)).code] as Room).addPlayer(new Player(ws));
-      return (new CodeModel(response.body)).code;
+      console.log("Joining Room: "+(new CodeModel(response.body.code)).code);
+      console.log("Me hearties b4: "+(rooms[(new CodeModel(response.body.code)).code] as Room).players.length);
+
+      (rooms[(new CodeModel(response.body.code)).code] as Room).addPlayer(new Player(new CustomNameModel(response.body.name).name,ws));
+      console.log("Me hearties aftr: "+(rooms[(new CodeModel(response.body.code)).code] as Room).players.map(p=>p.name));
+      return (new CodeModel(response.body.code)).code;
     case Endpoints.ALL_PLAYERS:
-        console.log("Joining Room: "+(new CodeModel(response.body)).code);
-        return (rooms[(new CodeModel(response.body)).code] as Room).addPlayer(new Player(ws));
+        return (rooms[(new CodeModel(response.body)).code] as Room).players.map(p=>p.name);
+    case Endpoints.ANSWERED_QUESTION: // ToDieu
+
     default:
       console.log('unidentified action!')
       console.log("object: "+response.endpoint);

@@ -1,5 +1,6 @@
 import { Endpoints } from './endpoints.js'
 import { CodeModel } from './response-models/code.model.js'
+import type { CustomNameModel } from './response-models/custom-name.model.js'
 import { WebSocketResponse } from './websocket-response.model.js'
 import { getAsyncMessage, sendAction, socket } from './websocket.ts'
 export const UNSET: string = 'UNSET'
@@ -51,25 +52,23 @@ class Client {
     this.host = true
     // TODO call server with game settings
     // Get wait for response back from server for success/failure and handle it
-    this.roomcode = (await getAsyncMessage(Endpoints.CREATE_ROOM));
+    this.roomcode = (await getAsyncMessage(Endpoints.CREATE_ROOM)).body;
   }
 
- async clientJoinGame(code:CodeModel) {
+ async clientJoinGame(code:CodeModel, name:CustomNameModel) {
     this.host = false
     // TODO call server with room code to get information
     // Get wait for response back from server for success/failure and handle it
     console.log("in the night");
-    this.roomcode = (await getAsyncMessage(Endpoints.JOIN_ROOM,code)).body;
+    this.roomcode = (await getAsyncMessage(Endpoints.JOIN_ROOM,{code:code,name:name})).body;
   }
 
   async clientCheckIfRoomExists(code:CodeModel) {
-    console.log("matt: "+code.code);
     return (await getAsyncMessage(Endpoints.GAME_EXISTS,code)).body; // race conditions ftw
   }
 
   async allPlayersInRoom() {
-    console.log("matt: "+code.code);
-    return (await getAsyncMessage(Endpoints.GAME_EXISTS,code)).body; // race conditions ftw
+    return (await getAsyncMessage(Endpoints.ALL_PLAYERS,new CodeModel({code:this.roomcode.toUpperCase()}))).body; // race conditions ftw
   }
 }
 

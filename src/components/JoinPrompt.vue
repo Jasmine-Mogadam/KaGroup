@@ -22,12 +22,14 @@
 <script>
 import { currentClient } from '@/client-websocket/client-websocket'
 import { CodeModel } from '@/client-websocket/response-models/code.model'
+import { CustomNameModel } from '@/client-websocket/response-models/custom-name.model'
 export default {
   data() {
     return {
       roomCode: '',
       roomCodeExistsError: false,
-      debounceTimeout: null
+      debounceTimeout: null,
+      playerName:""
     }
   },
   methods: {
@@ -42,7 +44,8 @@ export default {
     },
     joinRoom() {
       if (!this.roomCodeExistsError) {
-        currentClient.clientJoinGame(new CodeModel({code:this.roomCode.toUpperCase()})) // deliberately un-awaited async
+        currentClient.clientJoinGame(new CodeModel({code:this.roomCode.toUpperCase()}),
+                                      new CustomNameModel({name:this.playerName})) // deliberately un-awaited async
       }
     }
   }

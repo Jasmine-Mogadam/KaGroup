@@ -15,9 +15,12 @@ export class Player {
   customNameEmitter: EventEmitter = new EventEmitter()
   answeredQuestions: AnswerQuestionModel[] = []
 
-  constructor(websocket) {
+  constructor(name,websocket) {
     this.websocket = websocket
-
+    if (name === "") {
+      name = generateName();
+    }
+    this.name = name
     this.setupClientListeners()
   }
 
@@ -49,4 +52,22 @@ export class Player {
     this.name = CustomNameModel.name
     this.customNameEmitter.emit('true')
   }
+}
+function generateName(): string {
+  let animals:string[] = ["wolverine", "tiger", "boar", "panther", "ferret","donkey","musk-ox","muskrat","owl","snake","mouse","llama"];
+  let adjectives:string[] = ["stimulating",
+  "stupendous",
+  "alive",
+  "shocking",
+  "gabby",
+  "electronic",
+  "exuberant",
+  "blushing",
+  "glistening",
+  "ready"]
+  return adjectives[getRandomInt(adjectives.length)].toUpperCase()+" "+animals[getRandomInt(animals.length)].toUpperCase();
+}
+
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max)
 }
