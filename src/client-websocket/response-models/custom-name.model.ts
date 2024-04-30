@@ -1,6 +1,6 @@
 export class CustomNameModel {
   name: string
-  constructor(response: JSON) {
+  constructor(response: any) {
     this.name = response.name
   }
 }

@@ -1,3 +1,3 @@
 export class CreateRoomModel {
-  constructor(body: JSON) {}
+  constructor(body: any) {}
 }

@@ -4,7 +4,6 @@ import { Player } from "./player/player.ts";
 import { Host } from './host/host.ts';
 import { WebSocketResponse } from './websocket/websocket-response.model.ts';
 import { Endpoints } from './websocket/endpoints.ts';
-import { CustomNameModel } from './websocket/response-models/custom-name.model.ts';
 import { CodeModel } from './websocket/response-models/code.model.ts';
 import { GameModel } from './websocket/response-models/game.model.ts';
 let rooms:any = {};
@@ -17,6 +16,7 @@ wss.on('connection', function connection(ws) {
   // Whenever a client socket sends information, handle it
 
   ws.on('message', function message(data) {
+    console.log("twisted sister");
     const response = new WebSocketResponse(data);
     ws.send(
       JSON.stringify({
@@ -28,14 +28,14 @@ wss.on('connection', function connection(ws) {
 
   console.log('connected!')
 
-  //ws.send({something: 'something'}: JSON)
+  //ws.send({something: 'something'}: any)
 })
 
 // Handles stuff around creation of rooms, players, and hosts
   // Further functionality is handled directly by the classes with their own listeners
 function handleWebsocketMessage(data, ws) {
   const response = new WebSocketResponse(data);
-
+  console.log("tf is up?? "+response.endpoint);
   switch (response.endpoint) {
     case Endpoints.CREATE_ROOM:
       let newRoom = new Room(new GameModel(response.body))
@@ -45,13 +45,24 @@ function handleWebsocketMessage(data, ws) {
       console.log("Room code: "+newRoom.code)
       return newRoom.code
     case Endpoints.GAME_EXISTS:
-      return !!rooms[(new CodeModel(response.body)).code];
+      let code:CodeModel = (new CodeModel(response.body));
+      let exists = Object.keys(rooms).indexOf(code.code)!=-1;
+      console.log("Room "+code.code+" Exists?: "+exists);
+      console.log(Object.keys(rooms));
+      return exists;
     case Endpoints.PLAYER_EXISTS:
       return rooms[(new CodeModel(response.body)).code].players.map((p:Player) => p.name).indexOf(name)!=-1;
     case Endpoints.JOIN_ROOM:
-      return (rooms[(new CodeModel(response.body)).code] as Room).addPlayer(new Player(ws));
+      console.log("Joining Room: "+(new CodeModel(response.body)).code);
+      (rooms[(new CodeModel(response.body)).code] as Room).addPlayer(new Player(ws));
+      return (new CodeModel(response.body)).code;
+    case Endpoints.ALL_PLAYERS:
+        console.log("Joining Room: "+(new CodeModel(response.body)).code);
+        return (rooms[(new CodeModel(response.body)).code] as Room).addPlayer(new Player(ws));
     default:
       console.log('unidentified action!')
+      console.log("object: "+response.endpoint);
+
       return false;
   }
 }

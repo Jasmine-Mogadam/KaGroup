@@ -1,17 +1,15 @@
+import type { Endpoints } from "./endpoints"
+import { WebSocketResponse } from "./websocket-response.model"
+
 export const socket = new WebSocket('ws://localhost:3000')
 
-export function waitForMessage(messageAction: any): Promise<any> {
+export function waitForMessage(messageAction: Endpoints): Promise<WebSocketResponse> {
   return new Promise((resolve, reject) => {
     socket.addEventListener('message', (event) => {
       try {
-        let data
-        try {
-          data = JSON.parse(event.data)
-        } catch {
-          data = event.data
-        }
-        if (data.action === messageAction) {
-          resolve(data)
+        let response = new WebSocketResponse(event.data);
+        if (response.endpoint === messageAction) {
+          resolve(response)
         }
       } catch (error) {
         reject(error)
@@ -28,25 +26,25 @@ export function waitForMessage(messageAction: any): Promise<any> {
   })
 }
 
-export async function getAsyncMessage(action: string, body = {}): Promise<any> {
+export async function getAsyncMessage(action: Endpoints, body = {}): Promise<WebSocketResponse> {
   socket.send(
     JSON.stringify({
-      action: action,
+      endpoint: action,
       body: body
     })
   )
-  return (await waitForMessage(action)).body
+  return (await waitForMessage(action))
 }
 
-export function sendAction(action: string, body = {}) {
+export function sendAction(action: Endpoints, body = {}) {
   socket.send(
     JSON.stringify({
-      action: action,
+      endpoint: action,
       body: body
     })
   )
 }
 
-export async function getResultFromAsyncMessage(action: string, body = {}): Promise<string> {
-  return (await getAsyncMessage(action, body)).result
+export async function getResultFromAsyncMessage(action: Endpoints, body = {}): Promise<string> {
+  return (await getAsyncMessage(action, body)).body
 }

@@ -13,13 +13,14 @@ export class Room {
     this.gameDetails = gameDetails
     this.code = generateTemporaryCode()
     this.numAnswers = 0
+    this.players = [];
   }
 
   addPlayer(player) {
     this.players.push(player)
-    player.clientSocket.addEventListener('close', () => {
-      this.removePlayer(player)
-    })
+    // player.clientSocket.addEventListener('close', () => {
+    //   this.removePlayer(player)
+    // })
     return true;
     // player.answeredQuestionEmitter.event.on("true", () => {
     //   this.numAnswers++
@@ -46,10 +47,10 @@ export class Room {
 }
 function generateTemporaryCode() {
   return (
-    getRandomInt(10).toString() +
-    getRandomInt(10).toString() +
-    getRandomInt(10).toString() +
-    getRandomInt(10).toString()
+    String.fromCharCode(getRandomInt(26)+65) +
+    String.fromCharCode(getRandomInt(26)+65) +
+    String.fromCharCode(getRandomInt(26)+65) +
+    String.fromCharCode(getRandomInt(26)+65)
   )
 }
 function getRandomInt(max: number) {

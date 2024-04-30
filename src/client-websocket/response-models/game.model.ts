@@ -1,6 +1,6 @@
 export class GameModel {
   gameDetails: any
-  constructor(response: JSON) {
+  constructor(response: any) {
     this.gameDetails = response.gameDetails
   }
 }

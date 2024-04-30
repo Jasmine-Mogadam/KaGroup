@@ -21,6 +21,7 @@
 
 <script>
 import { currentClient } from '@/client-websocket/client-websocket'
+import { CodeModel } from '@/client-websocket/response-models/code.model'
 export default {
   data() {
     return {
@@ -36,12 +37,12 @@ export default {
         this.checkRoomCodeExists()
       }, 300) // Adjust the delay as needed
     },
-    checkRoomCodeExists() {
-      this.roomCodeExistsError = !currentClient.checkIfRoomExists(this.roomCode.toUpperCase())
+    async checkRoomCodeExists() {
+      this.roomCodeExistsError = !(await currentClient.clientCheckIfRoomExists(new CodeModel({code:this.roomCode.toUpperCase()})))
     },
     joinRoom() {
       if (!this.roomCodeExistsError) {
-        currentClient.joinRoom(this.roomCode)
+        currentClient.clientJoinGame(new CodeModel({code:this.roomCode.toUpperCase()})) // deliberately un-awaited async
       }
     }
   }

@@ -20,7 +20,7 @@ class Client {
   public socketConnected: boolean = false
   public host: boolean = false
   public name: string = UNSET
-  public room: string = UNSET
+  public roomcode: string = UNSET
 
   constructor() {
     this.socket = socket
@@ -47,23 +47,29 @@ class Client {
       }
     }.bind(this)
   }
-
-  clientHostGame() {
+  async clientHostGame() {
     this.host = true
     // TODO call server with game settings
     // Get wait for response back from server for success/failure and handle it
-    sendAction(Endpoints.CREATE_ROOM);
+    this.roomcode = (await getAsyncMessage(Endpoints.CREATE_ROOM));
   }
 
-  clientJoinGame(code:CodeModel) {
+ async clientJoinGame(code:CodeModel) {
     this.host = false
     // TODO call server with room code to get information
     // Get wait for response back from server for success/failure and handle it
-    sendAction(Endpoints.JOIN_ROOM,code);
+    console.log("in the night");
+    this.roomcode = (await getAsyncMessage(Endpoints.JOIN_ROOM,code)).body;
   }
 
-  clientCheckIfRoomExists(code:CodeModel) {
-    sendAction(Endpoints.GAME_EXISTS,code);
+  async clientCheckIfRoomExists(code:CodeModel) {
+    console.log("matt: "+code.code);
+    return (await getAsyncMessage(Endpoints.GAME_EXISTS,code)).body; // race conditions ftw
+  }
+
+  async allPlayersInRoom() {
+    console.log("matt: "+code.code);
+    return (await getAsyncMessage(Endpoints.GAME_EXISTS,code)).body; // race conditions ftw
   }
 }
 

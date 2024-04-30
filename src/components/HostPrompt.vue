@@ -39,6 +39,7 @@
 
 <script>
 import { currentClient } from '@/client-websocket/client-websocket'
+import { CodeModel } from '@/client-websocket/response-models/code.model'
 import ModalButton from './ModalButton.vue'
 export default {
   data() {
@@ -59,12 +60,12 @@ export default {
         this.checkRoomCodeExists()
       }, 300) // Adjust the delay as needed
     },
-    checkRoomCodeExists() {
-      this.roomCodeExistsError = !currentClient.checkIfRoomExists(this.roomCode.toUpperCase())
+    async checkRoomCodeExists() {
+      this.roomCodeExistsError = !(await currentClient.clientCheckIfRoomExists(new CodeModel(this.roomCode.toUpperCase())))
     },
     hostRoom() {
       if (!this.roomCodeExistsError) {
-        currentClient.hostRoom(this.roomCode)
+        currentClient.clientHostGame()
       }
     }
   }
