@@ -11,9 +11,9 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/session',
-      name: 'session',
-      component: () => import('../views/SessionView.vue')
+      path: '/lobby',
+      name: 'lobby',
+      component: () => import('../views/LobbyView.vue')
     },
     {
       path: '/customize_questions',

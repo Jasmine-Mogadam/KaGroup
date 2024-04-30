@@ -26,6 +26,9 @@ class Client {
   constructor() {
     this.socket = socket
     this.handleSocketMessages()
+    window.onload = () => {
+      this.isMobile = document.documentElement.clientWidth < 1000
+    }
   }
 
   init() {}

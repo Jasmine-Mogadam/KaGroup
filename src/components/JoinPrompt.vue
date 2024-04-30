@@ -13,7 +13,13 @@
         >Room code does not exist.</span
       >
     </div>
-    <div :class="['join-prompt-button-container', { 'button-disabled': roomCodeExistsError }]">
+    <div
+      :class="[
+        'join-prompt-button-container',
+        disabledClass,
+        { 'button-disabled': roomCodeExistsError }
+      ]"
+    >
       <button id="prompt-join-button" @click="joinRoom">Join</button>
     </div>
   </div>
@@ -29,7 +35,7 @@ export default {
       roomCode: '',
       roomCodeExistsError: false,
       debounceTimeout: null,
-      playerName:""
+      disabledClass: 'button-disabled'
     }
   },
   methods: {
@@ -37,6 +43,7 @@ export default {
       clearTimeout(this.debounceTimeout)
       this.debounceTimeout = setTimeout(() => {
         this.checkRoomCodeExists()
+        this.disabledClass = ''
       }, 300) // Adjust the delay as needed
     },
     async checkRoomCodeExists() {
