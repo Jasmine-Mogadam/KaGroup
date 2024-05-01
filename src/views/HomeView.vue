@@ -106,6 +106,8 @@ button {
 .background {
   position: absolute;
   z-index: 0;
+  top: 0;
+  left: 50%;
 }
 
 .desktop-bg {

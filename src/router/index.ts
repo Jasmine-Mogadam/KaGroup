@@ -16,6 +16,11 @@ const router = createRouter({
       component: () => import('../views/LobbyView.vue')
     },
     {
+      path: '/game',
+      name: 'game',
+      component: () => import('../views/GameView.vue')
+    },
+    {
       path: '/customize_questions',
       name: 'customize',
       component: CustomizeQuestions

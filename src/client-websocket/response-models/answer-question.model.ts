@@ -12,5 +12,6 @@ export class AnswerQuestionModel {
 export enum QuestionType {
   TEXT = 'Text',
   MULTIPLE_CHOICE = 'MultipleChoice',
-  NUMERIC = 'Numeric'
+  NUMERIC = 'Numeric',
+  NONE = 'None'
 }
