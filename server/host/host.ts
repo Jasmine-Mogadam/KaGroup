@@ -14,7 +14,7 @@ export class Host {
   disconnected: EventEmitter = new EventEmitter()
   answeredQuestion: EventEmitter = new EventEmitter()
 
-  constructor(room:Room, websocket) {
+  constructor(room: Room, websocket) {
     this.websocket = websocket
     this.room = room
     this.setupClientListeners()
@@ -28,7 +28,6 @@ export class Host {
       const response = new WebSocketResponse(message)
       switch (response.endpoint) {
         case Endpoints.START_GAME:
-
           break
         case Endpoints.RECEIVE_RESULTS_HOST:
           break
@@ -36,5 +35,13 @@ export class Host {
           console.log('Error! Unhandled message: ' + response.toString())
       }
     })
+  }
+
+  updatePlayers() {
+    sendAction(
+      Endpoints.ALL_PLAYERS,
+      this.room.players.map((p) => p.name),
+      this.websocket as any
+    )
   }
 }

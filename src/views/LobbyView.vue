@@ -44,7 +44,6 @@ const clientWidth = document.documentElement.clientWidth
   filter: brightness(100%);
   display: inline-block;
   z-index: 1;
-  position: relative;
   top: 0;
   transition: all 0.5s;
 }
@@ -54,8 +53,8 @@ const clientWidth = document.documentElement.clientWidth
   transition: all 0.5s;
 }
 .start-button {
-  position: relative;
-  bottom: 0;
+  position: fixed;
+  top: 50vh;
 }
 .lobby {
   padding: 1em;
@@ -92,9 +91,6 @@ const clientWidth = document.documentElement.clientWidth
   font-size: 2em;
   color: var(--off-white);
   background-color: var(--red);
-  position: fixed;
-  bottom: -60vh;
-  left: 5vw;
 }
 
 .button-positioner {
