@@ -1,5 +1,5 @@
-import { AnswerQuestionModel } from "../websocket/response-models/answer-question.model";
-import { QuestionType } from "../websocket/response-models/answer-question.model";
+import { AnswerQuestionModel } from "../websocket/response-models/answer-question.model.ts";
+import { QuestionType } from "../websocket/response-models/answer-question.model.ts";
 export const demoquestions: AnswerQuestionModel[] = [
   /**
    *     this.question = response.question

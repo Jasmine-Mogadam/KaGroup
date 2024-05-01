@@ -1,5 +1,5 @@
 import type { Endpoints } from "./endpoints"
-import { WebSocketResponse } from "./websocket-response.model"
+import { WebSocketResponse } from "./websocket-response.model.ts";
 
 export function waitForMessage(messageAction: Endpoints, socket:WebSocket): Promise<WebSocketResponse> {
   return new Promise((resolve, reject) => {

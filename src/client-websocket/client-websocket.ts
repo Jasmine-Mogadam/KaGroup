@@ -22,7 +22,7 @@ class Client {
   public socketConnected: boolean = false
   public host: boolean = false
   public name: string = UNSET
-  public roomcode: string = UNSET
+  public roomCode: string = UNSET
   public isMobile: boolean = true
 
   constructor() {
@@ -54,7 +54,7 @@ class Client {
     this.host = true
     // TODO call server with game settings
     // Get wait for response back from server for success/failure and handle it
-    this.roomcode = (await getAsyncMessage(Endpoints.CREATE_ROOM)).body
+    this.roomCode = (await getAsyncMessage(Endpoints.CREATE_ROOM)).body
     router.push('/lobby')
   }
 
@@ -66,7 +66,7 @@ class Client {
     let response:WebSocketResponse = await getAsyncMessage(Endpoints.JOIN_ROOM, { code: code, name: name });
     this.name = response.body
     router.push('/lobby')
-    this.roomcode = code.code;
+    this.roomCode = code.code;
   }
 
   async clientCheckIfRoomExists(code: CodeModel) {
@@ -77,7 +77,7 @@ class Client {
     return (
       await getAsyncMessage(
         Endpoints.ALL_PLAYERS,
-        new CodeModel({ code: this.roomcode.toUpperCase() })
+        new CodeModel({ code: this.roomCode.toUpperCase() })
       )
     ).body // race conditions ftw
   }

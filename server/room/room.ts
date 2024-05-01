@@ -18,9 +18,9 @@ export class Room {
     this.questions = QuestionPacks.demoquestions
   }
 
-  addPlayer(player) {
+  addPlayer(player:Player) {
     this.players.push(player)
-    player.clientSocket.addEventListener('close', () => {
+    player.websocket.addEventListener('close', () => {
       this.removePlayer(player)
     })
   }

@@ -54,8 +54,8 @@ function handleWebsocketMessage(data, ws) {
       console.log("Joining Room: "+(new CodeModel(response.body.code)).code);
       (rooms[(new CodeModel(response.body.code)).code] as Room).addPlayer(new Player(new CustomNameModel(response.body.name).name,ws));
 
-      // notify a host of updated players
-      let updatedPlayers:string[] = (rooms[(new CodeModel(response.body.code)).code] as Room).players.map(p=>p.name);
+      // notify a host of updated players; won't refresh on leaves
+      let updatedPlayers:string[] = (rooms[(new CodeModel(response.body.code)).code] as Room).players.map(p=>p.name)
       let hostSocket:WebSocket = (hosts[(new CodeModel(response.body.code)).code] as Host).websocket
       sendAction(Endpoints.ALL_PLAYERS,updatedPlayers,hostSocket)
 

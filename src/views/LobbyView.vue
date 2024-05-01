@@ -21,7 +21,7 @@ const clientWidth = document.documentElement.clientWidth
     <div class="room-code">
       <h3>
         Room Code :
-        <div class="code">{{ currentClient.room }}</div>
+        <div class="code">{{ currentClient.roomCode }}</div>
       </h3>
     </div>
     <div class="students-container" v-if="currentClient.host">
