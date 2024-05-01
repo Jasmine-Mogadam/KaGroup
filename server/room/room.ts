@@ -6,25 +6,28 @@ import { Question } from '../../src/types/Question.ts'
 import { AnswerQuestionModel } from '../websocket/response-models/answer-question.model.ts'
 import { sendAction } from '../websocket/websocket.ts'
 import { Endpoints } from '../websocket/endpoints.ts'
+import { Host } from '../host/host.ts'
 
 export class Room {
   code: string
   gameDetails: any
   players: Player[]
-  questions:AnswerQuestionModel[]
+  questions: AnswerQuestionModel[]
+  host: Host
 
-  constructor(gameDetails:GameModel) {
+  constructor(gameDetails: GameModel) {
     this.gameDetails = gameDetails
     this.code = generateTemporaryCode()
-    this.players = [];
+    this.players = []
     this.questions = QuestionPacks.demoquestions
   }
 
-  addPlayer(player:Player) {
+  addPlayer(player: Player) {
     this.players.push(player)
     player.websocket.addEventListener('close', () => {
       this.removePlayer(player)
     })
+    this.host.updatePlayers()
   }
 
   removePlayer(player) {
@@ -32,11 +35,7 @@ export class Room {
     if (index !== -1) {
       this.players.splice(index, 1)
     }
-    // if (this.players.length === 0) {
-    //   this.event.emit("all players lost");
-    // } else {
-    //   this.players.forEach((p) => p.clientSocket.send("player list update"));
-    // }
+    this.host.updatePlayers()
   }
 
   checkIfAllDone() {
@@ -62,10 +61,10 @@ export class Room {
 }
 function generateTemporaryCode() {
   return (
-    String.fromCharCode(getRandomInt(26)+65) +
-    String.fromCharCode(getRandomInt(26)+65) +
-    String.fromCharCode(getRandomInt(26)+65) +
-    String.fromCharCode(getRandomInt(26)+65)
+    String.fromCharCode(getRandomInt(26) + 65) +
+    String.fromCharCode(getRandomInt(26) + 65) +
+    String.fromCharCode(getRandomInt(26) + 65) +
+    String.fromCharCode(getRandomInt(26) + 65)
   )
 }
 function getRandomInt(max: number) {

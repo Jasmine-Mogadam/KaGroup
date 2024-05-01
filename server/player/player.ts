@@ -1,8 +1,11 @@
-import { WebSocket } from 'ws'
+import WebSocket from 'ws'
 import { WebSocketResponse } from '../websocket/websocket-response.model.ts'
 import { EventEmitter } from 'node:events'
 import { Endpoints } from '../websocket/endpoints.ts'
-import { AnswerQuestionModel, QuestionType } from '../websocket/response-models/answer-question.model.ts'
+import {
+  AnswerQuestionModel,
+  QuestionType
+} from '../websocket/response-models/answer-question.model.ts'
 import { Room } from '../room/room.ts'
 import { CustomNameModel } from '../websocket/response-models/custom-name.model.ts'
 import { sendAction } from '../websocket/websocket.ts'
@@ -15,14 +18,14 @@ export class Player {
   questionIndex: number
   answeredQuestions: AnswerQuestionModel[] = []
 
-  constructor(name,websocket) {
+  constructor(name, websocket) {
     this.websocket = websocket
-    if (name === "") {
-      name = generateName();
+    if (name === '') {
+      name = generateName()
     }
     this.questionIndex = 0
     this.name = name
-    console.log("New player made: "+name);
+    console.log('New player made: ' + name)
     this.setupClientListeners()
   }
 
@@ -39,7 +42,11 @@ export class Player {
             sendAction(Endpoints.ANSWERED_QUESTION,QuestionPacks.antultimatequestion,this.websocket) // ToDieu update to match enum
             this.room.checkIfAllDone();
           } else {
-            sendAction(Endpoints.ANSWERED_QUESTION, this.room.questions[this.answeredQuestions.length],this.websocket)
+            sendAction(
+              Endpoints.ANSWERED_QUESTION,
+              this.room.questions[this.answeredQuestions.length],
+              this.websocket as any
+            )
           }
           break
         default:
@@ -49,9 +56,37 @@ export class Player {
   }
 }
 function generateName(): string {
-  let animals:string[] = ["wolverine", "tiger", "boar", "panther", "ferret","donkey","musk-ox","muskrat","owl","snake","mouse","llama"];
-  let adjectives:string[] = ["stimulating","stupendous","alive","shocking","gabby","electronic","exuberant","blushing","glistening","ready"]
-  return adjectives[getRandomInt(adjectives.length)].toUpperCase()+" "+animals[getRandomInt(animals.length)].toUpperCase();
+  let animals: string[] = [
+    'wolverine',
+    'tiger',
+    'boar',
+    'panther',
+    'ferret',
+    'donkey',
+    'musk-ox',
+    'muskrat',
+    'owl',
+    'snake',
+    'mouse',
+    'llama'
+  ]
+  let adjectives: string[] = [
+    'stimulating',
+    'stupendous',
+    'alive',
+    'shocking',
+    'gabby',
+    'electronic',
+    'exuberant',
+    'blushing',
+    'glistening',
+    'ready'
+  ]
+  return (
+    adjectives[getRandomInt(adjectives.length)].toUpperCase() +
+    ' ' +
+    animals[getRandomInt(animals.length)].toUpperCase()
+  )
 }
 
 function getRandomInt(max: number) {

@@ -45,12 +45,37 @@ class Client {
         // Emit an event that affects the frontend
         case Endpoints.JOIN_ROOM:
         // Emit an event that affects the frontend
+        case Endpoints.ALL_PLAYERS:
+          this.handleAllPlayers(response.body)
         default:
           console.log('unidentified action!')
           return false
       }
     }.bind(this)
   }
+
+  handleAllPlayers(players: string[]) {
+    var studentList = document.getElementById('students-list')
+    if (this.host && studentList) {
+      // Clear the list of any previous information
+      studentList.innerHTML = '' // Using innerHTML to clear the list
+      // Loop through the array of student names
+      for (var i = 0; i < players.length; i++) {
+        // Create a new li element
+        var newLI = document.createElement('li')
+
+        // Create a text node with the student name
+        var newContent = document.createTextNode(players[i])
+
+        // Append the text node to the li element
+        newLI.appendChild(newContent)
+
+        // Append the li element to the unordered list
+        studentList.appendChild(newLI)
+      }
+    }
+  }
+
   async clientHostGame() {
     this.host = true
     // TODO call server with game settings
@@ -64,10 +89,13 @@ class Client {
     // TODO call server with room code to get information
     // Get wait for response back from server for success/failure and handle it
     console.log('in the night')
-    let response:WebSocketResponse = await getAsyncMessage(Endpoints.JOIN_ROOM, { code: code, name: name });
+    let response: WebSocketResponse = await getAsyncMessage(Endpoints.JOIN_ROOM, {
+      code: code,
+      name: name
+    })
     this.name = response.body
     router.push('/lobby')
-    this.roomCode = code.code;
+    this.roomCode = code.code
   }
 
   async clientCheckIfRoomExists(code: CodeModel) {

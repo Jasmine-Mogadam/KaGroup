@@ -13,7 +13,7 @@ export class Host {
   room: Room
   answeredQuestion: EventEmitter = new EventEmitter()
 
-  constructor(room:Room, websocket) {
+  constructor(room: Room, websocket) {
     this.websocket = websocket
     this.room = room
     this.setupClientListeners()
@@ -32,5 +32,13 @@ export class Host {
           console.log('Error! Unhandled message: ' + response.toString())
       }
     })
+  }
+
+  updatePlayers() {
+    sendAction(
+      Endpoints.ALL_PLAYERS,
+      this.room.players.map((p) => p.name),
+      this.websocket as any
+    )
   }
 }
