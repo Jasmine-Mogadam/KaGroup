@@ -1,52 +1,33 @@
 import type { Question } from "@/types/Question";
-
-export const bigfivequestions: Question[] = [
+export const demoquestions: Question[] = [
   {
     QuestionType:'multiple',
-    QuestionText:'I see myself as someone who is reserved',
+    QuestionText:'Gender',
     QuestionPreEntered:false,
 
-    QuestionOptions:['Disagree strongly','Disagree a little','Neither afree nor disagree','Agree a little','Agree strongly'],
-    QuestionPack: 'bigfive'
+    QuestionOptions:['Woman','Man','Transgender Woman','Transgender Man','Non-Binary','Agender/I don\'t with any gender', 'Gender not listed/prefer not to state'],
+    QuestionPack: 'catme'
   },
   {
     QuestionType:'multiple',
-    QuestionText:'I see myself as someone who is generally trusting',
+    QuestionText:'Race',
     QuestionPreEntered:false,
-
-    QuestionOptions:['Disagree strongly','Disagree a little','Neither afree nor disagree','Agree a little','Agree strongly'],
-    QuestionPack: 'bigfive'
+    QuestionOptions:['American Indian/Alaska Native','Asian','Black','Native Hawaiian','Pacific Islanders','White', 'Decline to Respond'],
+    QuestionPack: 'catme'
   },
   {
     QuestionType:'multiple',
-    QuestionText:'I see myself as someone who tends to be lazy',
+    QuestionText:'I would consider myself more of a big-picture thinker than detail-oriented',
     QuestionPreEntered:false,
-
-    QuestionOptions:['Disagree strongly','Disagree a little','Neither afree nor disagree','Agree a little','Agree strongly'],
-    QuestionPack: 'bigfive'
-  },
-  {
-    QuestionType:'multiple',
-    QuestionText:'I see myself as someone who is relaxed, handles stress well',
-    QuestionPreEntered:false,
-
-    QuestionOptions:['Disagree strongly','Disagree a little','Neither afree nor disagree','Agree a little','Agree strongly'],
-    QuestionPack: 'bigfive'
-  },
-  {
-    QuestionType:'multiple',
-    QuestionText:'I see myself as someone who has few artistic interests',
-    QuestionPreEntered:false,
-
-    QuestionOptions:['Disagree strongly','Disagree a little','Neither afree nor disagree','Agree a little','Agree strongly'],
-    QuestionPack: 'bigfive'
+    QuestionOptions:['Strongly Agree', 'Agree', 'Undecided', 'Disagree', 'Strongly Disagree'],
+    QuestionPack: 'catme'
   },
   {
     QuestionType:'multiple',
     QuestionText:'I see myself as someone who is outgoing, sociable',
     QuestionPreEntered:false,
 
-    QuestionOptions:['Disagree strongly','Disagree a little','Neither afree nor disagree','Agree a little','Agree strongly'],
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
     QuestionPack: 'bigfive'
   },
   {
@@ -54,7 +35,7 @@ export const bigfivequestions: Question[] = [
     QuestionText:'I see myself as someone who tends to find fault with others',
     QuestionPreEntered:false,
 
-    QuestionOptions:['Disagree strongly','Disagree a little','Neither afree nor disagree','Agree a little','Agree strongly'],
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
     QuestionPack: 'bigfive'
   },
   {
@@ -62,7 +43,104 @@ export const bigfivequestions: Question[] = [
     QuestionText:'I see myself as someone who does a thorough job',
     QuestionPreEntered:false,
 
-    QuestionOptions:['Disagree strongly','Disagree a little','Neither afree nor disagree','Agree a little','Agree strongly'],
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
+    QuestionPack: 'bigfive'
+  },
+  {
+    QuestionType:'multiple',
+    QuestionText:'I see myself as someone who is relaxed, handles stress well',
+    QuestionPreEntered:false,
+
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
+    QuestionPack: 'bigfive'
+  },
+  {
+    QuestionType:'multiple',
+    QuestionText:'I see myself as someone who has few artistic interests',
+    QuestionPreEntered:false,
+
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
+    QuestionPack: 'bigfive'
+  },
+  {
+    QuestionType:'multiple',
+    QuestionText:'I would like to act as a leader',
+    QuestionPreEntered:false,
+
+    QuestionOptions:['Strongly Agree', 'Agree', 'Undecided', 'Disagree', 'Strongly Disagree'],
+    QuestionPack: 'catme'
+  },
+  {
+    QuestionType:'text',
+    QuestionText:'Would you rather have unlimited bacon but no more games, or games (unlimited games) and no games? Answer honestly.',
+    QuestionPreEntered:false,
+    QuestionOptions:[],
+    QuestionPack: 'icebreaker'
+  },
+]
+export const bigfivequestions: Question[] = [
+  {
+    QuestionType:'multiple',
+    QuestionText:'I see myself as someone who is reserved',
+    QuestionPreEntered:false,
+
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
+    QuestionPack: 'bigfive'
+  },
+  {
+    QuestionType:'multiple',
+    QuestionText:'I see myself as someone who is generally trusting',
+    QuestionPreEntered:false,
+
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
+    QuestionPack: 'bigfive'
+  },
+  {
+    QuestionType:'multiple',
+    QuestionText:'I see myself as someone who tends to be lazy',
+    QuestionPreEntered:false,
+
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
+    QuestionPack: 'bigfive'
+  },
+  {
+    QuestionType:'multiple',
+    QuestionText:'I see myself as someone who is relaxed, handles stress well',
+    QuestionPreEntered:false,
+
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
+    QuestionPack: 'bigfive'
+  },
+  {
+    QuestionType:'multiple',
+    QuestionText:'I see myself as someone who has few artistic interests',
+    QuestionPreEntered:false,
+
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
+    QuestionPack: 'bigfive'
+  },
+  {
+    QuestionType:'multiple',
+    QuestionText:'I see myself as someone who is outgoing, sociable',
+    QuestionPreEntered:false,
+
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
+    QuestionPack: 'bigfive'
+  },
+  {
+    QuestionType:'multiple',
+    QuestionText:'I see myself as someone who tends to find fault with others',
+    QuestionPreEntered:false,
+
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
+    QuestionPack: 'bigfive'
+  },
+  {
+    QuestionType:'multiple',
+    QuestionText:'I see myself as someone who does a thorough job',
+    QuestionPreEntered:false,
+
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
     QuestionPack: 'bigfive'
   },
   {
@@ -70,7 +148,7 @@ export const bigfivequestions: Question[] = [
     QuestionText:'I see myself as someone who gets nervous easily',
     QuestionPreEntered:false,
 
-    QuestionOptions:['Disagree strongly','Disagree a little','Neither afree nor disagree','Agree a little','Agree strongly'],
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
     QuestionPack: 'bigfive'
   },
   {
@@ -78,7 +156,7 @@ export const bigfivequestions: Question[] = [
     QuestionText:'I see myself as someone who has an active imagination',
     QuestionPreEntered:false,
 
-    QuestionOptions:['Disagree strongly','Disagree a little','Neither afree nor disagree','Agree a little','Agree strongly'],
+    QuestionOptions:['Disagree strongly','Disagree a little','Neither agree nor disagree','Agree a little','Agree strongly'],
     QuestionPack: 'bigfive'
   }
 ];

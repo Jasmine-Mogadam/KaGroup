@@ -1,36 +1,28 @@
 import { Player } from '../player/player.ts'
 import { EventEmitter } from 'node:events'
 import { GameModel } from '../websocket/response-models/game.model.ts'
+import * as QuestionPacks from '../constants/question-packs.ts'
+import { Question } from '../../src/types/Question.ts'
+import { AnswerQuestionModel } from '../websocket/response-models/answer-question.model.ts'
 
 export class Room {
-  players: Player[]
   code: string
   gameDetails: any
-  numAnswers: number
-  answeredQuestionEmitter: EventEmitter = new EventEmitter()
+  players: Player[]
+  questions:AnswerQuestionModel[]
 
   constructor(gameDetails:GameModel) {
     this.gameDetails = gameDetails
     this.code = generateTemporaryCode()
-    this.numAnswers = 0
     this.players = [];
+    this.questions = QuestionPacks.demoquestions
   }
 
   addPlayer(player) {
     this.players.push(player)
-    // player.clientSocket.addEventListener('close', () => {
-    //   this.removePlayer(player)
-    // })
-    return true;
-    // player.answeredQuestionEmitter.event.on("true", () => {
-    //   this.numAnswers++
-    //   if (this.numAnswers == this.players.length) {
-    //     for (const p of this.players) {
-    //       p.advanceQuestion() // sends a message to advance the question
-    //     }
-    //     this.numAnswers = 0;
-    //   }
-    // });
+    player.clientSocket.addEventListener('close', () => {
+      this.removePlayer(player)
+    })
   }
 
   removePlayer(player) {

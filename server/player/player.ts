@@ -2,17 +2,16 @@ import { WebSocket } from 'ws'
 import { WebSocketResponse } from '../websocket/websocket-response.model.ts'
 import { EventEmitter } from 'node:events'
 import { Endpoints } from '../websocket/endpoints.ts'
-import { AnswerQuestionModel } from '../websocket/response-models/answer-question.model.ts'
+import { AnswerQuestionModel, QuestionType } from '../websocket/response-models/answer-question.model.ts'
 import { Room } from '../room/room.ts'
 import { CustomNameModel } from '../websocket/response-models/custom-name.model.ts'
-
+import { sendAction } from '../websocket/websocket.ts'
+import { Question } from '../../src/types/Question.ts'
 export class Player {
   websocket: WebSocket
   room: Room
   name: string
-  disconnectedEmitter: EventEmitter = new EventEmitter()
-  answeredQuestionEmitter: EventEmitter = new EventEmitter()
-  customNameEmitter: EventEmitter = new EventEmitter()
+  questionIndex: number
   answeredQuestions: AnswerQuestionModel[] = []
 
   constructor(name,websocket) {
@@ -20,51 +19,39 @@ export class Player {
     if (name === "") {
       name = generateName();
     }
+    this.questionIndex = 0
     this.name = name
+    console.log("New player made: "+name);
     this.setupClientListeners()
   }
 
   setupClientListeners() {
     this.websocket.on('close', () => {
-      this.disconnectedEmitter.emit('true')
+      // this.disconnectedEmitter.emit('true')
     })
-    this.websocket.on('message', (message: string) => {
-      const response = new WebSocketResponse(message)
+    this.websocket.on('message', (data: string) => {
+      const response = new WebSocketResponse(data)
       switch (response.endpoint) {
-        case Endpoints.CUSTOM_NAME:
-          this.handleCustomName(new CustomNameModel(response.body)) //Implement this, should assign the name to this player and emit an event that name was changed
-          break
         case Endpoints.ANSWERED_QUESTION:
-          this.handleAnsweredQuestion(new AnswerQuestionModel(response.body))
+          this.answeredQuestions.push(new AnswerQuestionModel(response.body))
+          if (this.answeredQuestions.length == this.room.questions.length) {
+            sendAction(Endpoints.ANSWERED_QUESTION,new AnswerQuestionModel({type:QuestionType.NONE}),this.websocket) // ToDieu update to match enum
+          } else {
+            sendAction(Endpoints.ANSWERED_QUESTION, this.room.questions[this.answeredQuestions.length],this.websocket)
+          }
+          break
+        case Endpoints.RECEIVE_RESULTS_PLAYER:
+
           break
         default:
           console.log('Error! Unhandled message: ' + response.toString())
       }
     })
   }
-
-  handleAnsweredQuestion(answeredQuestion: AnswerQuestionModel) {
-    this.answeredQuestions.push(answeredQuestion)
-    this.answeredQuestionEmitter.emit('true')
-  }
-
-  handleCustomName(CustomName: CustomNameModel) {
-    this.name = CustomNameModel.name
-    this.customNameEmitter.emit('true')
-  }
 }
 function generateName(): string {
   let animals:string[] = ["wolverine", "tiger", "boar", "panther", "ferret","donkey","musk-ox","muskrat","owl","snake","mouse","llama"];
-  let adjectives:string[] = ["stimulating",
-  "stupendous",
-  "alive",
-  "shocking",
-  "gabby",
-  "electronic",
-  "exuberant",
-  "blushing",
-  "glistening",
-  "ready"]
+  let adjectives:string[] = ["stimulating","stupendous","alive","shocking","gabby","electronic","exuberant","blushing","glistening","ready"]
   return adjectives[getRandomInt(adjectives.length)].toUpperCase()+" "+animals[getRandomInt(animals.length)].toUpperCase();
 }
 

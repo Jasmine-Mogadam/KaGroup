@@ -1,13 +1,16 @@
 export enum Endpoints {
+  // Generally handled
   CREATE_ROOM = 'CreateRoom',
   JOIN_ROOM = 'JoinRoom',
   PLAYER_EXISTS = 'PlayerExists',
   GAME_EXISTS = 'GameExists',
+  // Player specific; this way we don't have to constantly re-authenticate
   ANSWERED_QUESTION = 'AnsweredQuestion',
-  CUSTOM_NAME = 'CustomName',
+  RECEIVE_RESULTS_PLAYER = 'ReceiveResultsPlayer',
+  // Host specific
   ALL_PLAYERS = 'AllPlayers',
-  KICK_PLAYER = 'KickPlayer',
   START_GAME = 'StartGame',
-  RETRIEVE_QUESTION = 'RetrieveQuestion',
-  FAILED_PARSE = 'FailedParse'
+  RECEIVE_RESULTS_HOST = 'ReceiveResultsHost',
+  // Essentially if WebSocketResponse isn't parsed into something usable
+  FAILED_PARSE = 'FailedParse',
 }

@@ -23,6 +23,7 @@ class Client {
   public host: boolean = false
   public name: string = UNSET
   public roomcode: string = UNSET
+  public isMobile: boolean = true
 
   constructor() {
     this.socket = socket
@@ -62,8 +63,10 @@ class Client {
     // TODO call server with room code to get information
     // Get wait for response back from server for success/failure and handle it
     console.log('in the night')
-    this.roomcode = (await getAsyncMessage(Endpoints.JOIN_ROOM, { code: code, name: name })).body
+    let response:WebSocketResponse = await getAsyncMessage(Endpoints.JOIN_ROOM, { code: code, name: name });
+    this.name = response.body
     router.push('/lobby')
+    this.roomcode = code.code;
   }
 
   async clientCheckIfRoomExists(code: CodeModel) {

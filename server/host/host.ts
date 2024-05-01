@@ -5,6 +5,7 @@ import { Endpoints } from '../websocket/endpoints.ts'
 import { AnswerQuestionModel } from '../websocket/response-models/answer-question.model.ts'
 import { Room } from '../room/room.ts'
 import { CustomNameModel } from '../websocket/response-models/custom-name.model.ts'
+import { sendAction } from '../websocket/websocket.ts'
 
 export class Host {
   websocket: WebSocket
@@ -20,31 +21,20 @@ export class Host {
   }
 
   setupClientListeners() {
-    // this.websocket.on('close', () => {
-    //   this.disconnected.emit('true')
-    // })
-    // this.websocket.on('message', (message: string) => {
-    //   const response = new WebSocketResponse(message)
-    //   switch (response.endpoint) {
-    //     case Endpoints.CUSTOM_NAME:
-    //       this.handleCustomName(new CustomNameModel(response.body)) //Implement this, should assign the name to this Host and emit an event that name was changed
-    //       break
-    //     case Endpoints.ANSWERED_QUESTION:
-    //       this.handleAnsweredQuestion(new AnswerQuestionModel(response.body))
-    //       break
-    //     default:
-    //       console.log('Error! Unhandled message: ' + response.toString())
-    //   }
-    // })
+    this.websocket.on('close', () => {
+      this.disconnected.emit('true')
+    })
+    this.websocket.on('message', (message: string) => {
+      const response = new WebSocketResponse(message)
+      switch (response.endpoint) {
+        case Endpoints.START_GAME:
+
+          break
+        case Endpoints.RECEIVE_RESULTS_HOST:
+          break
+        default:
+          console.log('Error! Unhandled message: ' + response.toString())
+      }
+    })
   }
-
-  // handleAnsweredQuestion(answeredQuestion: AnswerQuestionModel) {
-  //   this.answeredQuestions.push(answeredQuestion)
-  //   this.answeredQuestion.emit('true')
-  // }
-
-  // handleCustomName(CustomName: CustomNameModel) {
-  //   this.name = CustomNameModel.name
-  //   this.answeredQuestion.emit('true')
-  // }
 }
