@@ -1,7 +1,7 @@
 export class AnswerQuestionModel {
   question: string
   type: QuestionType
-  answer: string
+  answer: string | null
   choices: string[] | null
   constructor(response: any) {
     this.question = response.question

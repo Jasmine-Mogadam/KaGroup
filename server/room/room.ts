@@ -4,6 +4,8 @@ import { GameModel } from '../websocket/response-models/game.model.ts'
 import * as QuestionPacks from '../constants/question-packs.ts'
 import { Question } from '../../src/types/Question.ts'
 import { AnswerQuestionModel } from '../websocket/response-models/answer-question.model.ts'
+import { sendAction } from '../websocket/websocket.ts'
+import { Endpoints } from '../websocket/endpoints.ts'
 
 export class Room {
   code: string
@@ -35,6 +37,27 @@ export class Room {
     // } else {
     //   this.players.forEach((p) => p.clientSocket.send("player list update"));
     // }
+  }
+
+  checkIfAllDone() {
+    for (let i = 0; i < this.players.length; i++) {
+      if (this.players[i].answeredQuestions.length == this.questions.length) { // this assumes everyone finishes; no timeout implemented
+        return false;
+      }
+    }
+    // Now we group people into 3s
+    let curGroup:Player[] = [];
+    let teamsize = 3;
+    for (let i = 0; i < this.players.length; i+teamsize < this.players.length) { // Temp algorithm
+      curGroup.push(this.players[i]);
+      if ((i != 0) && (i%teamsize == 0)) {
+        for (let j = 0; j < teamsize; j++) {
+          sendAction(Endpoints.RECEIVE_RESULTS_PLAYER,curGroup.map(p=>p.name),curGroup[j].websocket);
+        }
+        curGroup = [];
+      }
+    }
+
   }
 }
 function generateTemporaryCode() {

@@ -6,12 +6,11 @@ import { AnswerQuestionModel } from '../websocket/response-models/answer-questio
 import { Room } from '../room/room.ts'
 import { CustomNameModel } from '../websocket/response-models/custom-name.model.ts'
 import { sendAction } from '../websocket/websocket.ts'
+import { send } from 'node:process'
 
 export class Host {
   websocket: WebSocket
   room: Room
-  name: string
-  disconnected: EventEmitter = new EventEmitter()
   answeredQuestion: EventEmitter = new EventEmitter()
 
   constructor(room:Room, websocket) {
@@ -21,16 +20,13 @@ export class Host {
   }
 
   setupClientListeners() {
-    this.websocket.on('close', () => {
-      this.disconnected.emit('true')
-    })
     this.websocket.on('message', (message: string) => {
       const response = new WebSocketResponse(message)
       switch (response.endpoint) {
-        case Endpoints.START_GAME:
-
-          break
-        case Endpoints.RECEIVE_RESULTS_HOST:
+        case Endpoints.START_GAME_HOST:
+          for (let i = 0; i < this.room.players.length; i++) {
+            sendAction(Endpoints.START_GAME_PLAYER,{},this.room.players[i].websocket);
+          }
           break
         default:
           console.log('Error! Unhandled message: ' + response.toString())

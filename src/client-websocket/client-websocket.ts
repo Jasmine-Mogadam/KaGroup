@@ -4,6 +4,7 @@ import type { CustomNameModel } from './response-models/custom-name.model.js'
 import { WebSocketResponse } from './websocket-response.model.js'
 import { getAsyncMessage, sendAction, socket } from './websocket.ts'
 import router from '../router/index.js'
+import type { AnswerQuestionModel } from './response-models/answer-question.model.js'
 export const UNSET: string = 'UNSET'
 
 window.onload = function () {
@@ -80,6 +81,20 @@ class Client {
         new CodeModel({ code: this.roomCode.toUpperCase() })
       )
     ).body // race conditions ftw
+  }
+
+  // START_GAME_HOST
+  startGame() {
+    sendAction(Endpoints.START_GAME_HOST);
+  }
+  // ANSWERED_QUESTION
+  async sendAnswer(answer:AnswerQuestionModel) {
+    return (
+      await getAsyncMessage(
+        Endpoints.ANSWERED_QUESTION,
+        answer)
+      )
+    .body // race conditions ftw
   }
 }
 

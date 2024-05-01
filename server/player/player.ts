@@ -6,7 +6,8 @@ import { AnswerQuestionModel, QuestionType } from '../websocket/response-models/
 import { Room } from '../room/room.ts'
 import { CustomNameModel } from '../websocket/response-models/custom-name.model.ts'
 import { sendAction } from '../websocket/websocket.ts'
-import { Question } from '../../src/types/Question.ts'
+import * as QuestionPacks from '../constants/question-packs.ts'
+
 export class Player {
   websocket: WebSocket
   room: Room
@@ -35,13 +36,11 @@ export class Player {
         case Endpoints.ANSWERED_QUESTION:
           this.answeredQuestions.push(new AnswerQuestionModel(response.body))
           if (this.answeredQuestions.length == this.room.questions.length) {
-            sendAction(Endpoints.ANSWERED_QUESTION,new AnswerQuestionModel({type:QuestionType.NONE}),this.websocket) // ToDieu update to match enum
+            sendAction(Endpoints.ANSWERED_QUESTION,QuestionPacks.antultimatequestion,this.websocket) // ToDieu update to match enum
+            this.room.checkIfAllDone();
           } else {
             sendAction(Endpoints.ANSWERED_QUESTION, this.room.questions[this.answeredQuestions.length],this.websocket)
           }
-          break
-        case Endpoints.RECEIVE_RESULTS_PLAYER:
-
           break
         default:
           console.log('Error! Unhandled message: ' + response.toString())
